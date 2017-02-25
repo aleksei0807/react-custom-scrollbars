@@ -610,7 +610,10 @@ export default createClass({
             })
         };
 
-        return createElement(tagName, { ...props, style: containerStyle, ref: 'container' }, [
+		const elProps = props;
+		delete elProps.scrollHeight;
+		delete elProps.clientHeight;
+        return createElement(tagName, { ...elProps, style: containerStyle, ref: 'container' }, [
             cloneElement(
                 renderView({ style: viewStyle }),
                 { key: 'view', ref: 'view' },
