@@ -133,7 +133,7 @@ export default createClass({
 
     getScrollHeight() {
         const { view } = this.refs;
-        return view.scrollHeight;
+        return this.props.scrollHeight || view.scrollHeight;
     },
 
     getClientWidth() {
@@ -143,7 +143,7 @@ export default createClass({
 
     getClientHeight() {
         const { view } = this.refs;
-        return view.clientHeight;
+        return this.props.clientHeight || view.clientHeight;
     },
 
     getValues() {
@@ -152,10 +152,10 @@ export default createClass({
             scrollLeft,
             scrollTop,
             scrollWidth,
-            scrollHeight,
             clientWidth,
-            clientHeight
         } = view;
+		const scrollHeight = this.getScrollHeight();
+        const clientHeight = this.getClientHeight();
 
         return {
             left: (scrollLeft / (scrollWidth - clientWidth)) || 0,
@@ -182,14 +182,9 @@ export default createClass({
 
     getThumbVerticalHeight() {
         const { thumbSize, thumbMinSize } = this.props;
-        const { view, trackVertical } = this.refs;
-        let { scrollHeight, clientHeight } = view;
-		if (this.props.scrollHeight) {
-			scrollHeight = this.props.scrollHeight;
-		}
-		if (this.props.clientHeight) {
-			clientHeight = this.props.clientHeight;
-		}
+        const { trackVertical } = this.refs;
+        const scrollHeight = this.getScrollHeight();
+        const clientHeight = this.getClientHeight();
 
         const trackHeight = getInnerHeight(trackVertical);
         const height = Math.ceil(clientHeight / scrollHeight * trackHeight);
@@ -207,8 +202,10 @@ export default createClass({
     },
 
     getScrollTopForOffset(offset) {
-        const { view, trackVertical } = this.refs;
-        const { scrollHeight, clientHeight } = view;
+        const { trackVertical } = this.refs;
+        const scrollHeight = this.getScrollHeight();
+        const clientHeight = this.getClientHeight();
+
         const trackHeight = getInnerHeight(trackVertical);
         const thumbHeight = this.getThumbVerticalHeight();
         return offset / (trackHeight - thumbHeight) * (scrollHeight - clientHeight);
@@ -241,7 +238,7 @@ export default createClass({
 
     scrollToBottom() {
         const { view } = this.refs;
-        view.scrollTop = view.scrollHeight;
+		view.scrollTop = this.getScrollHeight();
     },
 
     addListeners() {
