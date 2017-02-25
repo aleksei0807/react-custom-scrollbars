@@ -369,7 +369,6 @@ export default createClass({
 
 	clientY: null,
 	thumbHeight: null,
-	dontMoveThumb: false,
 
     teardownDragging() {
         css(document.body, disableSelectStyleReset);
@@ -395,9 +394,6 @@ export default createClass({
             view.scrollLeft = this.getScrollLeftForOffset(offset);
         }
         if (this.prevPageY) {
-			if (this.props.disableAutoScrollOnTrack) {
-				this.dontMoveThumb = true;
-			}
             const { clientY } = event;
             const { view, trackVertical } = this.refs;
             const { top: trackTop } = trackVertical.getBoundingClientRect();
@@ -502,8 +498,7 @@ export default createClass({
         const values = this.getValues();
 		const { trackVertical } = this.refs;
         const trackVerticalHeight = getInnerHeight(trackVertical);
-		if (getScrollbarWidth() && (!this.props.disableAutoScrollOnTrack || (this.props.disableAutoScrollOnTrack && this.thumbHeight === null && !this.dontMoveThumb))) {
-			console.log('update', 'getScrollbarWidth()', getScrollbarWidth(), 'this.props.disableAutoScrollOnTrack', this.props.disableAutoScrollOnTrack, 'this.thumbHeight', this.thumbHeight, 'this.dontMoveThumb', this.dontMoveThumb);
+		if (getScrollbarWidth() && (!this.props.disableAutoScrollOnTrack || (this.props.disableAutoScrollOnTrack && this.thumbHeight === null && !this.dragging))) {
             const { thumbHorizontal, thumbVertical, trackHorizontal } = this.refs;
             const { scrollLeft, clientWidth, scrollWidth } = values;
             const trackHorizontalWidth = getInnerWidth(trackHorizontal);
@@ -547,7 +542,6 @@ export default createClass({
 		}
 		this.thumbHeight = null;
 		this.clientY = null;
-		this.dontMoveThumb = false;
         if (typeof callback !== 'function') return;
         callback(values);
     },
