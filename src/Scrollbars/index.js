@@ -549,6 +549,8 @@ export default createClass({
             autoHeightMax,
             style,
             children,
+			scrollHeight,
+			clientHeight,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
@@ -610,10 +612,7 @@ export default createClass({
             })
         };
 
-		const elProps = props;
-		delete elProps.scrollHeight;
-		delete elProps.clientHeight;
-        return createElement(tagName, { ...elProps, style: containerStyle, ref: 'container' }, [
+        return createElement(tagName, { ...props, style: containerStyle, ref: 'container' }, [
             cloneElement(
                 renderView({ style: viewStyle }),
                 { key: 'view', ref: 'view' },
