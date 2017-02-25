@@ -402,7 +402,7 @@ export default createClass({
             const offset = -trackTop + clientY - clickPosition;
 			const scrollTopForOffset = this.getScrollTopForOffset(offset);
 			if (this.props.handleDrag) {
-				this.props.handleDrag(view, scrollTopForOffset);
+				this.props.handleDrag(view, event);
 			} else {
 				view.scrollTop = scrollTopForOffset;
 			}
