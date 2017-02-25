@@ -411,7 +411,6 @@ export default createClass({
     },
 
     handleDragEnd() {
-		console.log('draglog');
         this.dragging = false;
         this.prevPageX = this.prevPageY = 0;
         this.teardownDragging();
