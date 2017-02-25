@@ -60,6 +60,7 @@ export default createClass({
             PropTypes.number,
             PropTypes.string
         ]),
+		disableAutoScrollOnTrack: PropTypes.bool,
         universal: PropTypes.bool,
         style: PropTypes.object,
         children: PropTypes.node,
@@ -336,7 +337,9 @@ export default createClass({
         const offset = Math.abs(targetTop - clientY) - thumbHeight / 2;
 		this.thumbHeight = thumbHeight;
 		this.clientY = clientY;
-        view.scrollTop = this.getScrollTopForOffset(offset);
+		if (!this.props.disableAutoScrollOnTrack) {
+			view.scrollTop = this.getScrollTopForOffset(offset);
+		}
     },
 
     handleHorizontalThumbMouseDown(event) {
@@ -561,6 +564,7 @@ export default createClass({
             children,
 			scrollHeight,
 			clientHeight,
+			disableAutoScrollOnTrack,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
