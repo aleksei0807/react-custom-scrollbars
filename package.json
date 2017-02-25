@@ -13,7 +13,7 @@
     "test": "NODE_ENV=test karma start",
     "test:watch": "NODE_ENV=test karma start --auto-watch --no-single-run",
     "test:cov": "NODE_ENV=test COVERAGE=true karma start --single-run",
-    "prepublish": "npm run lint && npm run test && npm run clean && npm run build && npm run build:umd && npm run build:umd:min && node ./prepublish"
+    "prepublish": "npm run lint && npm run test && npm run clean && npm run build && npm run build:umd && npm run build:umd:min"
   },
   "repository": {
     "type": "git",

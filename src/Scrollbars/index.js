@@ -63,6 +63,8 @@ export default createClass({
         universal: PropTypes.bool,
         style: PropTypes.object,
         children: PropTypes.node,
+		scrollHeight: PropTypes.number,
+		clientHeight: PropTypes.number,
     },
 
     getDefaultProps() {
@@ -181,7 +183,14 @@ export default createClass({
     getThumbVerticalHeight() {
         const { thumbSize, thumbMinSize } = this.props;
         const { view, trackVertical } = this.refs;
-        const { scrollHeight, clientHeight } = view;
+        let { scrollHeight, clientHeight } = view;
+		if (this.props.scrollHeight) {
+			scrollHeight = this.props.scrollHeight;
+		}
+		if (this.props.clientHeight) {
+			clientHeight = this.props.clientHeight;
+		}
+
         const trackHeight = getInnerHeight(trackVertical);
         const height = Math.ceil(clientHeight / scrollHeight * trackHeight);
         if (trackHeight === height) return 0;
