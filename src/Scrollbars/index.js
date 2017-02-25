@@ -44,6 +44,7 @@ export default createClass({
         renderTrackVertical: PropTypes.func,
         renderThumbHorizontal: PropTypes.func,
         renderThumbVertical: PropTypes.func,
+		scrollTopMod: PropTypes.func,
         tagName: PropTypes.string,
         thumbSize: PropTypes.number,
         thumbMinSize: PropTypes.number,
@@ -501,7 +502,11 @@ export default createClass({
                 width: thumbHorizontalWidth,
                 transform: `translateX(${thumbHorizontalX}px)`
             };
-            const { scrollTop, clientHeight, scrollHeight } = values;
+            const { clientHeight, scrollHeight } = values;
+			let { scrollTop } = values;
+			if (this.scrollTopMod) {
+				scrollTop = this.scrollTopMod(scrollTop);
+			}
             const thumbVerticalHeight = this.getThumbVerticalHeight();
             const thumbVerticalY = scrollTop / (scrollHeight - clientHeight) * (trackVerticalHeight - thumbVerticalHeight);
             const thumbVerticalStyle = {
@@ -565,6 +570,7 @@ export default createClass({
 			scrollHeight,
 			clientHeight,
 			disableAutoScrollOnTrack,
+			scrollTopMod,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
