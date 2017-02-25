@@ -337,9 +337,7 @@ export default createClass({
         const offset = Math.abs(targetTop - clientY) - thumbHeight / 2;
 		this.thumbHeight = thumbHeight;
 		this.clientY = clientY;
-		if (!this.props.disableAutoScrollOnTrack) {
-			view.scrollTop = this.getScrollTopForOffset(offset);
-		}
+		view.scrollTop = this.getScrollTopForOffset(offset);
     },
 
     handleHorizontalThumbMouseDown(event) {
@@ -491,8 +489,10 @@ export default createClass({
     _update(callback) {
         const { onUpdate, hideTracksWhenNotNeeded } = this.props;
         const values = this.getValues();
-        if (getScrollbarWidth()) {
-            const { thumbHorizontal, thumbVertical, trackHorizontal, trackVertical } = this.refs;
+		const { trackVertical } = this.refs;
+        const trackVerticalHeight = getInnerHeight(trackVertical);
+		if (getScrollbarWidth() && (!this.props.disableAutoScrollOnTrack || (this.props.disableAutoScrollOnTrack && this.thumbHeight === null))) {
+            const { thumbHorizontal, thumbVertical, trackHorizontal } = this.refs;
             const { scrollLeft, clientWidth, scrollWidth } = values;
             const trackHorizontalWidth = getInnerWidth(trackHorizontal);
             const thumbHorizontalWidth = this.getThumbHorizontalWidth();
@@ -502,7 +502,6 @@ export default createClass({
                 transform: `translateX(${thumbHorizontalX}px)`
             };
             const { scrollTop, clientHeight, scrollHeight } = values;
-            const trackVerticalHeight = getInnerHeight(trackVertical);
             const thumbVerticalHeight = this.getThumbVerticalHeight();
             const thumbVerticalY = scrollTop / (scrollHeight - clientHeight) * (trackVerticalHeight - thumbVerticalHeight);
             const thumbVerticalStyle = {
@@ -527,6 +526,7 @@ export default createClass({
 				...values,
 				thumbHeight: this.thumbHeight,
 				clientY: this.clientY,
+				trackVerticalHeight,
 			});
 		}
 		this.thumbHeight = null;
