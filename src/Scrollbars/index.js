@@ -503,6 +503,7 @@ export default createClass({
 		const { trackVertical } = this.refs;
         const trackVerticalHeight = getInnerHeight(trackVertical);
 		if (getScrollbarWidth() && (!this.props.disableAutoScrollOnTrack || (this.props.disableAutoScrollOnTrack && this.thumbHeight === null && !this.dontMoveThumb))) {
+			console.log('update', 'getScrollbarWidth()', getScrollbarWidth(), 'this.props.disableAutoScrollOnTrack', this.props.disableAutoScrollOnTrack, 'this.thumbHeight', this.thumbHeight, 'this.dontMoveThumb', this.dontMoveThumb);
             const { thumbHorizontal, thumbVertical, trackHorizontal } = this.refs;
             const { scrollLeft, clientWidth, scrollWidth } = values;
             const trackHorizontalWidth = getInnerWidth(trackHorizontal);
