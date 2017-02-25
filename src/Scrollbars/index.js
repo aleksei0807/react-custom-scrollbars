@@ -504,8 +504,8 @@ export default createClass({
             };
             const { clientHeight, scrollHeight } = values;
 			let { scrollTop } = values;
-			if (this.scrollTopMod) {
-				scrollTop = this.scrollTopMod(scrollTop);
+			if (this.props.scrollTopMod) {
+				scrollTop = this.props.scrollTopMod(scrollTop);
 			}
             const thumbVerticalHeight = this.getThumbVerticalHeight();
             const thumbVerticalY = scrollTop / (scrollHeight - clientHeight) * (trackVerticalHeight - thumbVerticalHeight);
