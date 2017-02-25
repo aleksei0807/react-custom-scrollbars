@@ -334,6 +334,8 @@ export default createClass({
         const { top: targetTop } = target.getBoundingClientRect();
         const thumbHeight = this.getThumbVerticalHeight();
         const offset = Math.abs(targetTop - clientY) - thumbHeight / 2;
+		this.thumbHeight = thumbHeight;
+		this.clientY = clientY;
         view.scrollTop = this.getScrollTopForOffset(offset);
     },
 
@@ -361,6 +363,9 @@ export default createClass({
         document.addEventListener('mouseup', this.handleDragEnd);
         document.onselectstart = returnFalse;
     },
+
+	clientY: null,
+	thumbHeight: null,
 
     teardownDragging() {
         css(document.body, disableSelectStyleReset);
@@ -514,7 +519,15 @@ export default createClass({
             css(thumbHorizontal, thumbHorizontalStyle);
             css(thumbVertical, thumbVerticalStyle);
         }
-        if (onUpdate) onUpdate(values);
+        if (onUpdate) {
+			onUpdate({
+				...values,
+				thumbHeight: this.thumbHeight,
+				clientY: this.clientY,
+			});
+		}
+		this.thumbHeight = null;
+		this.clientY = null;
         if (typeof callback !== 'function') return;
         callback(values);
     },
