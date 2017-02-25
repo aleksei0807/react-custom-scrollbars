@@ -44,6 +44,7 @@ export default createClass({
         renderTrackVertical: PropTypes.func,
         renderThumbHorizontal: PropTypes.func,
         renderThumbVertical: PropTypes.func,
+        handleDrag: PropTypes.func,
 		scrollTopMod: PropTypes.func,
         tagName: PropTypes.string,
         thumbSize: PropTypes.number,
@@ -399,7 +400,12 @@ export default createClass({
             const thumbHeight = this.getThumbVerticalHeight();
             const clickPosition = thumbHeight - this.prevPageY;
             const offset = -trackTop + clientY - clickPosition;
-            view.scrollTop = this.getScrollTopForOffset(offset);
+			const scrollTopForOffset = this.getScrollTopForOffset(offset);
+			if (this.props.handleDrag) {
+				this.props.handleDrag(view, scrollTopForOffset);
+			} else {
+				view.scrollTop = scrollTopForOffset;
+			}
         }
         return false;
     },
@@ -571,6 +577,7 @@ export default createClass({
 			clientHeight,
 			disableAutoScrollOnTrack,
 			scrollTopMod,
+			handleDrag,
             ...props
         } = this.props;
         /* eslint-enable no-unused-vars */
