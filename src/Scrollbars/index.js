@@ -582,10 +582,6 @@ export default createClass({
         } = this.props;
         /* eslint-enable no-unused-vars */
 
-		delete props.scrollHeight;
-		delete props.disableAutoScrollOnTrack;
-		delete props.scrollTopMod;
-		delete props.handleDrag;
 
         const { didMountUniversal } = this.state;
 
@@ -643,8 +639,13 @@ export default createClass({
                 display: 'none'
             })
         };
+		const elProps = JSON.parse(JSON.stringify(props));
+		delete elProps.scrollHeight;
+		delete elProps.disableAutoScrollOnTrack;
+		delete elProps.scrollTopMod;
+		delete elProps.handleDrag;
 
-        return createElement(tagName, { ...props, style: containerStyle, ref: 'container' }, [
+        return createElement(tagName, { ...elProps, style: containerStyle, ref: 'container' }, [
             cloneElement(
                 renderView({ style: viewStyle }),
                 { key: 'view', ref: 'view' },
