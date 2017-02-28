@@ -582,6 +582,11 @@ export default createClass({
         } = this.props;
         /* eslint-enable no-unused-vars */
 
+		delete props.scrollHeight;
+		delete props.disableAutoScrollOnTrack;
+		delete props.scrollTopMod;
+		delete props.handleDrag;
+
         const { didMountUniversal } = this.state;
 
         const containerStyle = {
