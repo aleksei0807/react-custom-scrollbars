@@ -639,7 +639,7 @@ export default createClass({
                 display: 'none'
             })
         };
-		const elProps = JSON.parse(JSON.stringify(props));
+		const elProps = { ...props };
 		delete elProps.scrollHeight;
 		delete elProps.disableAutoScrollOnTrack;
 		delete elProps.scrollTopMod;
